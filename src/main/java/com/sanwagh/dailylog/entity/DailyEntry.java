@@ -22,6 +22,7 @@ public class DailyEntry {
     @Column(name = "date", nullable = false, unique = true)
     private LocalDate date;
 
+
     private int ruminationRating;
     private boolean practiceCompleted;
 

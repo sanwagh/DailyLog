@@ -3,6 +3,8 @@ package com.sanwagh.dailylog.services;
 import com.sanwagh.dailylog.dto.DailyEntryRequest;
 import com.sanwagh.dailylog.dto.DailyEntryResponse;
 import com.sanwagh.dailylog.entity.DailyEntry;
+import com.sanwagh.dailylog.exceptions.EntryAlreadyExistsException;
+import com.sanwagh.dailylog.exceptions.EntryNotFoundException;
 import com.sanwagh.dailylog.mapper.DailyEntryMapper;
 import com.sanwagh.dailylog.repositories.DailyEntryRepository;
 import lombok.AllArgsConstructor;
@@ -27,12 +29,12 @@ public class DailyEntryService {
         Optional<DailyEntry> presentEntry = dailyEntryRepository.findByDate(date);
 
         DailyEntry newEntry = null;
+
         if (presentEntry.isEmpty()) {
-            //This is a new entry!!
             newEntry = mapper.toEntity(dailyEntryRequest);
             newEntry.setDate(date); //set date to today as this will be null
         } else {
-           throw new IllegalStateException("Entity Already exists");
+           throw new EntryAlreadyExistsException("Entity Already exists");
         }
 
         return mapper.toResponse(dailyEntryRepository.save(newEntry));
@@ -41,7 +43,7 @@ public class DailyEntryService {
     public DailyEntryResponse fetchEntryByDate(LocalDate date)
     {
         return mapper.toResponse(dailyEntryRepository.findByDate(date)
-                .orElseThrow(() -> new IllegalStateException("Entity not found on date " + date)));
+                .orElseThrow(() -> new EntryNotFoundException("Entity not found on date " + date)));
     }
 
     public List<DailyEntryResponse> fetchEntriesInRange(LocalDate startDate, LocalDate endDate)
@@ -59,7 +61,7 @@ public class DailyEntryService {
 
         if(getLastWeekEntries.isEmpty())
         {
-            throw new IllegalStateException("Could not fetch last 7 days.");
+            throw new EntryNotFoundException("Could not fetch last 7 days.");
         }
 
         return getLastWeekEntries.stream()
