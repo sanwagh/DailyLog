@@ -7,7 +7,7 @@ services:
       POSTGRES_USER: dailylog
       POSTGRES_PASSWORD: dailylog
     ports:
-      - "5432:5432"
+      - "5430:5432"
     volumes:
       - dailylog-postgres-data:/var/lib/postgresql/data
 
