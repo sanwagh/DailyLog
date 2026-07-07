@@ -2,7 +2,7 @@
 
 A personal daily rumination/anxiety tracker. Log a rating and whether you did your
 coping practice each day, browse past entries, and see trends over time. Built as a
-single-user tool for self-hosting — no accounts, no auth.
+single-user tool for self-hosting.
 
 ## Stack
 
@@ -75,23 +75,6 @@ npm install
 npm run dev
 ```
 Runs on `http://localhost:5173` by default (Vite dev server).
-
-## Deploying to a home server
-
-Since the frontend runs as a static build in the *visiting browser* (not on the
-server), and the backend enforces CORS by allowed origin, a few things need to
-change from the local-dev defaults when deploying:
-
-- **CORS** (`src/main/java/com/sanwagh/dailylog/config/WebConfig.java`): add the
-  server's LAN IP/hostname to `allowedOriginPatterns` — `localhost` there refers to
-  whichever origin a *browser* is loading from, not the server itself.
-- **Frontend API base URL**: set it via a Vite env var (e.g. `VITE_API_BASE_URL`)
-  pointing at `http://<server-lan-ip>:8080` before running `npm run build`, rather
-  than hardcoding `localhost`.
-- **Serving the build**: `npm run build` outputs static files to `frontend/dist/` —
-  these need a static file server (e.g. `serve`, nginx) to actually be served.
-- No authentication exists anywhere in this API — keep it LAN-only; don't expose it
-  to the public internet without adding auth first.
 
 ## Project structure
 
