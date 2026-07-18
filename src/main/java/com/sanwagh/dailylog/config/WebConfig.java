@@ -11,7 +11,7 @@ public class WebConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry)
     {
         registry.addMapping("/api/**")
-                .allowedOriginPatterns("http://localhost:*")
+                .allowedOriginPatterns("http://localhost:*", "https://daily-log-sanw.vercel.app")
                 .allowedMethods("GET", "POST")
                 .allowedHeaders("*");
     }
