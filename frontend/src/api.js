@@ -1,3 +1,5 @@
+import { getAuthHeader, clearAuthHeader, AUTH_INVALID_EVENT } from "./auth.js";
+
 const BASE_URL = import.meta.env.VITE_API_BASE_URL ?? "http://localhost:8080/api/entry";
 
 export class ApiError extends Error {
@@ -8,15 +10,24 @@ export class ApiError extends Error {
   }
 }
 
-async function doFetch(url, options) {
+async function doFetch(url, options = {}) {
+  const headers = { ...options.headers };
+  const authHeader = getAuthHeader();
+  if (authHeader) headers.Authorization = authHeader;
+
   let response;
   try {
-    response = await fetch(url, options);
+    response = await fetch(url, { ...options, headers });
   } catch {
     throw new ApiError(
       "Could not reach the server. Is the backend running on localhost:8080?",
       null
     );
+  }
+
+  if (response.status === 401) {
+    clearAuthHeader();
+    window.dispatchEvent(new Event(AUTH_INVALID_EVENT));
   }
 
   if (!response.ok) {

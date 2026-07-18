@@ -176,6 +176,12 @@ body {
   border: 1px solid var(--moss);
 }
 
+.banner--error {
+  background: var(--clay-soft);
+  color: var(--error);
+  border: 1px solid var(--clay);
+}
+
 /* Date range picker */
 
 .date-range {
@@ -454,6 +460,50 @@ body {
   font-style: italic;
   color: var(--ink);
   font-size: 14px;
+}
+
+/* Login */
+
+.page--login {
+  max-width: 340px;
+  margin: 64px auto 0;
+}
+
+.login-head {
+  font-style: italic;
+  font-weight: 400;
+  font-size: 28px;
+  margin: 0 0 24px;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.login-form__field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+
+.login-form__field input {
+  font: 15px var(--serif);
+  color: var(--ink);
+  padding: 10px 12px;
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  background: var(--paper-raised);
+}
+
+.login-form .page__actions {
+  justify-content: flex-start;
 }
 
 /* Chart */
